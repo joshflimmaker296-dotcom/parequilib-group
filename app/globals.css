@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+body {
+  background: #14161F;
+  color: #F0EEE6;
+}
+
+::selection {
+  background: #FFB454;
+  color: #14161F;
+}
+
+.btn {
+  border-radius: 9px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform .15s ease, opacity .15s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn-amber { background: #FFB454; color: #20140A; }
+.btn-amber:hover { opacity: 0.9; }
+.btn-ghost { background: #262B3D; color: #F0EEE6; border: 1px solid #34394D; }
+.btn-ghost:hover { border-color: #7EE8C0; }
+.btn-mint { background: #7EE8C0; color: #0D2419; }
+
+.card {
+  background: #1C2030;
+  border: 1px solid #34394D;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.card:hover { border-color: #8A6A3A; transform: translateY(-2px); }
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  background: #262B3D;
+  border: 1px solid #34394D;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #F0EEE6;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: #FFB454; }
