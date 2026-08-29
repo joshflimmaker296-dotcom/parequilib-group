@@ -8,19 +8,28 @@ export async function GET() {
 
   const supabase = createServiceClient();
 
-  const [{ count: listingCount }, { count: userCount }, { data: listings }, { data: orders }, { count: msgCount }, { count: offerCount }] =
-    await Promise.all([
-      supabase.from("listings").select("*", { count: "exact", head: true }).eq("status", "active"),
-      supabase.from("profiles").select("*", { count: "exact", head: true }),
-      supabase.from("listings").select("price").eq("status", "active"),
-      supabase.from("orders").select("amount, platform_fee").eq("status", "paid"),
-      supabase.from("messages").select("*", { count: "exact", head: true }),
-      supabase.from("offers").select("*", { count: "exact", head: true }),
-    ]);
+  const [
+    { count: listingCount },
+    { count: userCount },
+    { data: listingsData },
+    { data: ordersData },
+    { count: msgCount },
+    { count: offerCount },
+  ] = await Promise.all([
+    supabase.from("listings").select("*", { count: "exact", head: true }).eq("status", "active"),
+    supabase.from("profiles").select("*", { count: "exact", head: true }),
+    supabase.from("listings").select("price").eq("status", "active"),
+    supabase.from("orders").select("amount, platform_fee").eq("status", "paid"),
+    supabase.from("messages").select("*", { count: "exact", head: true }),
+    supabase.from("offers").select("*", { count: "exact", head: true }),
+  ]);
 
-  const listedValue = (listings || []).reduce((sum, l) => sum + Number(l.price), 0);
-  const realizedRevenue = (orders || []).reduce((sum, o) => sum + Number(o.platform_fee), 0);
-  const realizedVolume = (orders || []).reduce((sum, o) => sum + Number(o.amount), 0);
+  const listings = (listingsData ?? []) as { price: number }[];
+  const orders = (ordersData ?? []) as { amount: number; platform_fee: number }[];
+
+  const listedValue = listings.reduce((sum, l) => sum + Number(l.price), 0);
+  const realizedRevenue = orders.reduce((sum, o) => sum + Number(o.platform_fee), 0);
+  const realizedVolume = orders.reduce((sum, o) => sum + Number(o.amount), 0);
 
   return NextResponse.json({
     activeListings: listingCount || 0,
