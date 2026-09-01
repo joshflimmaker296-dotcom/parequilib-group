@@ -1,5 +1,5 @@
 # Parequilib Group
-
+     
 A real marketplace app: Supabase for auth + database, Stripe Connect for real
 payouts (with your 10% platform fee), Next.js for the app itself, and
 optional Claude-powered listing writing / shopping assistant.
